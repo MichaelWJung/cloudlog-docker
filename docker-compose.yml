@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  web:
+    build: 'docker'
+    restart: 'always'
+    depends_on:
+      - mariadb
+    restart: 'always'
+    ports:
+      - '8080:80'
+    links:
+      - mariadb
+    volumes:
+      - "./html/:/var/www/html/"
+  mariadb:
+    image: "mariadb:10.7"
+    restart: 'always'
+    volumes:
+      - "./mysql:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
